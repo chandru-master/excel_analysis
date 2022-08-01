@@ -34,38 +34,6 @@ class Release:
         return release_id
             
 
-class effort:
-    def __init__(self,data):
-        self.data=data
-        self.data=data.fillna(0)
-    
-    def rework(self):
-        Status=self.data['Status']
-        data_filter=self.data[(Status!='To Do') & (Status!='Invalid') & (Status!='On Hold') & (Status!='Duplicate')]
-        Issue_type=data_filter['Issue Type']
-        try:
-            data_Issue_filtered=data_filter[(Issue_type=='Bug') | (Issue_type=='Bug SubTask')]
-            rework_effort=data_Issue_filtered['Time Spent'].sum()
-        except:
-            rework_effort=0.0    
-
-        return rework_effort 
-
-    def development_timespent(self):
-        Status=self.data['Status']
-        data_filter=self.data[(Status!='To Do') & (Status!='Invalid') & (Status!='On Hold') & (Status!='Duplicate')]
-        Issue_type=data_filter['Issue Type']
-        data_bug_filter=data_filter[(Issue_type!='Bug') & (Issue_type!='Bug SubTask')]
-        dev_effort=data_bug_filter['Time Spent'].sum()
-        return round(dev_effort,2)
-
-    def development_estimated(self):
-        Status=self.data['Status']
-        data_filter=self.data[(Status!='To Do') & (Status!='Invalid') & (Status!='On Hold') & (Status!='Duplicate')]
-        Issue_type=data_filter['Issue Type']
-        data_bug_filter=data_filter[(Issue_type!='Bug') & (Issue_type!='Bug SubTask')]
-        dev_effort=data_bug_filter['Original Estimate'].sum()
-        return round(dev_effort,2)
 
 project = st.selectbox('PROJECT NAME', ('Select', 'SOUCS'))
 activities = st.selectbox('METRIC NAME', ('Select', 'NEW DEFECT', 'REOPEN RATE'))
